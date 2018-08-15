@@ -1,7 +1,7 @@
 NAME    := openpa
 VERSION := 1.0.4
 RELEASE := 1
-DIST    := .el7.centos
+DIST    := $(shell rpm --eval %{dist})
 SRPM    := _topdir/SRPMS/$(NAME)-$(VERSION)-$(RELEASE)$(DIST).src.rpm
 RPMS    := _topdir/RPMS/x86_64/$(NAME)-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm           \
 	   _topdir/RPMS/x86_64/$(NAME)-devel-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm     \
@@ -27,7 +27,7 @@ $(NAME)-$(VERSION).tar.gz:
 $(subst rpm,%,$(RPMS)): $(SPEC) _topdir/SOURCES/$(NAME)-$(VERSION).tar.gz
 	rpmbuild -bb --define "%_topdir $$PWD/_topdir" $(SPEC)
 
-$(SRPM): $(SPEC)
+$(SRPM): $(SPEC) _topdir/SOURCES/$(NAME)-$(VERSION).tar.gz
 	rpmbuild -bs --define "%_topdir $$PWD/_topdir" $(SPEC)
 
 srpm: $(SRPM)
@@ -39,3 +39,6 @@ ls: $(TARGETS)
 
 mockbuild: $(SRPM)
 	mock $<
+
+rpmlint: $(SPEC)
+	rpmlint $<
