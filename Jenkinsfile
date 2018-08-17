@@ -35,13 +35,11 @@ pipeline {
                               mkdir -p artifacts/
                               if make srpm; then
                                   if make mockbuild; then
-                                      cp -af /var/lib/mock/epel-7-x86_64/root/builddir/build/RPMS artifacts/
-                                      cp -af _topdir/SRPMS artifacts/
-                                      cd artifacts/
-                                      createrepo .
+                                      (cd /var/lib/mock/epel-7-x86_64/result/ && cp -r . $OLDPWD/artifacts/)
+                                      createrepo artifacts/
                                   else
                                       rc=\${PIPESTATUS[0]}
-                                      cp -af /var/lib/mock/epel-7-x86_64/result artifacts/
+                                      (cd /var/lib/mock/epel-7-x86_64/result/ && cp -r . $OLDPWD/artifacts/)
                                       cp -af _topdir/SRPMS artifacts/
                                       exit \$rc
                                   fi
