@@ -8,7 +8,7 @@ RPMS    := _topdir/RPMS/x86_64/$(NAME)-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm  
 	   _topdir/RPMS/x86_64/$(NAME)-debuginfo-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm
 SPEC    := $(NAME).spec
 SRC_EXT := gz
-SOURCE  := https://trac.mpich.org/projects/openpa/raw-attachment/wiki/Downloads/$(NAME)-$(VERSION).tar.$(SRC_EXT)
+SOURCE  := https://github.com/pmodels/$(NAME)/releases/download/v$(VERSION)/$(NAME)-$(VERSION).tar.$(SRC_EXT)
 TARGETS := $(RPMS) $(SRPM)
 
 all: $(TARGETS)

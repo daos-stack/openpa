@@ -1,13 +1,13 @@
 Name:		openpa
 Version:	1.0.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 
 Summary:	OpenPA
 
 Group:		Development/Libraries
 License:	ANL
-URL:		http://mercury-hpc.github.io/documentation/
-Source0:	https://trac.mpich.org/projects/openpa/raw-attachment/wiki/Downloads/openpa-1.0.4.tar.gz
+URL:		https://github.com/pmodels/openpa
+Source0:	https://github.com/pmodels/openpa/releases/download/v%{version}/openpa-%{version}.tar.gz
 
 %description
 OpenPA
@@ -29,7 +29,7 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-1.0.4-1.el7.centos.x86_64 | xargs ls -ld
+find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-%{version}-1.el7.centos.x86_64 | xargs ls -ld
 
 %files
 %{_libdir}/*.so.*
@@ -43,6 +43,7 @@ find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-1.0.4-1.el7.centos.x86_64 
 %{_libdir}/pkgconfig/
 
 %changelog
+* Mon Mar 11 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-2
+- update to reflect move to GitHub
 * Mon Aug 13 2018 Brian J. Murrell <brian.murrell@intel> - 1.0.4-1
 - initial package
-
