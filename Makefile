@@ -17,6 +17,7 @@ all: $(TARGETS)
 	mkdir -p $@
 
 _topdir/SOURCES/%: % | _topdir/SOURCES/
+	rm -f $@
 	ln $< $@
 
 $(NAME)-$(VERSION).tar.$(SRC_EXT):
@@ -33,13 +34,17 @@ $(SRPM): $(SPEC) _topdir/SOURCES/$(NAME)-$(VERSION).tar.$(SRC_EXT)
 
 srpm: $(SRPM)
 
+$(RPMS): Makefile
+
 rpms: $(RPMS)
 
 ls: $(TARGETS)
 	ls -ld $^
 
-mockbuild: $(SRPM)
+mockbuild: $(SRPM) Makefile
 	mock $<
 
 rpmlint: $(SPEC)
 	rpmlint $<
+
+.PHONY: srpm rpms ls mockbuild rpmlint FORCE
