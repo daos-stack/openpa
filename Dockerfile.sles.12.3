@@ -18,6 +18,7 @@ ARG UID=1000
 RUN zypper --non-interactive update
 RUN zypper --non-interactive install make rpm-build curl createrepo git
 RUN /usr/sbin/update-ca-certificates -v -f
+RUN ls -l /var/lib/ca-certificates/pem
 
 # Add build user (to keep rpmbuild happy)
 ENV USER build
