@@ -17,7 +17,8 @@ ARG UID=1000
 # Install basic tools
 RUN zypper --non-interactive update
 RUN zypper --non-interactive install make rpm-build curl createrepo git
-RUN /usr/sbin/update-ca-certificates -v -f
+RUN zypper --non-interactive install strace
+RUN strace -f /usr/sbin/update-ca-certificates -v -f
 RUN ls -l /var/lib/ca-certificates/pem
 
 # Add build user (to keep rpmbuild happy)
