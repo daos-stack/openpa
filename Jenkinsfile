@@ -37,7 +37,7 @@ pipeline {
                                   if make mockbuild; then
                                       (cd /var/lib/mock/epel-7-x86_64/result/ &&
                                        cp -r . $OLDPWD/artifacts/centos\\ 7/)
-                                      createrepo artifacts/centos\\ 7.
+                                      createrepo artifacts/centos\\ 7/
                                   else
                                       rc=\${PIPESTATUS[0]}
                                       (cd /var/lib/mock/epel-7-x86_64/result/ &&
