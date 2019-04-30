@@ -51,7 +51,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'artifacts/centos\\ 7/**'
+                            archiveArtifacts artifacts: 'artifacts/centos 7/**'
                         }
                     }
                 }
@@ -76,7 +76,7 @@ pipeline {
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'artifacts/sles\\ 12.3/**'
+                            archiveArtifacts artifacts: 'artifacts/sles 12.3/**'
                         }
                     }
                 }
