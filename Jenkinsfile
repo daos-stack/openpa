@@ -60,12 +60,14 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.sles.12.3'
                             label 'docker_runner'
-                            additionalBuildArgs  '--build-arg UID=$(id -u) --cap-add SYS_PTRACE'
+                            additionalBuildArgs  '--build-arg UID=$(id -u)'
+                            args '--cap-add SYS_PTRACE'
                         }
                     }
                     steps {
                         sh '''rm -rf artifacts/sles\\ 12.3/
                               mkdir -p artifacts/sles\\ 12.3/
+                              strace -f /usr/sbin/update-ca-certificates -v -f
                               if make rpms; then
                                   cp -af _topdir/{S,}RPMS artifacts/sles\\ 12.3/
                                   cd artifacts/sles\\ 12.3/
