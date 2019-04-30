@@ -1,7 +1,7 @@
 NAME    := openpa
 VERSION := 1.0.4
 RELEASE := 2
-DIST    := $(shell rpm --eval %{dist})
+DIST    := $(shell rpm --eval %{?dist})
 SRPM    := _topdir/SRPMS/$(NAME)-$(VERSION)-$(RELEASE)$(DIST).src.rpm
 RPMS    := _topdir/RPMS/x86_64/$(NAME)-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm           \
 	   _topdir/RPMS/x86_64/$(NAME)-devel-$(VERSION)-$(RELEASE)$(DIST).x86_64.rpm     \
