@@ -13,7 +13,7 @@ TARGETS := $(RPMS) $(SRPM)
 
 # need to use -k because the certificate store is not properly
 # configured on SLES 12.3 containers
-ifeq($(shell lsb_release -sir), SUSE 12.3)
+ifeq ($(shell lsb_release -sir),SUSE 12.3)
   CURL_INSECURE := -k
 endif
 
