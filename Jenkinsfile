@@ -68,7 +68,6 @@ pipeline {
                               mkdir -p artifacts/sles\\ 12.3/
                               if make rpms; then
                                   cp -af _topdir/{S,}RPMS artifacts/sles\\ 12.3/
-                                  cd artifacts/sles\\ 12.3/
                                   createrepo artifacts/sles\\ 12.3/
                               else
                                   exit \${PIPESTATUS[0]}
