@@ -16,7 +16,7 @@ ARG UID=1000
 
 # Install basic tools
 RUN yum install -y epel-release
-RUN yum install -y mock make rpm-build curl createrepo rpmlint
+RUN yum install -y mock make rpm-build curl createrepo rpmlint redhat-lsb-core
 
 # Add build user (to keep rpmbuild happy)
 ENV USER build
