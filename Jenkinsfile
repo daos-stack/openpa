@@ -60,7 +60,7 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.sles.12.3'
                             label 'docker_runner'
-                            additionalBuildArgs  '--build-arg UID=$(id -u)'
+                            additionalBuildArgs  '--build-arg UID=$(id -u) --cap-add SYS_PTRACE'
                         }
                     }
                     steps {
