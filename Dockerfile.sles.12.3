@@ -19,7 +19,7 @@ RUN zypper --non-interactive update
 RUN zypper --non-interactive install make rpm-build curl createrepo git
 RUN zypper --non-interactive install strace
 RUN update-ca-certificates -v -f
-RUN ls -l /var/lib/ca-certificates/pem
+RUN ls -lR /var/lib/ca-certificates
 
 # Add build user (to keep rpmbuild happy)
 ENV USER build
