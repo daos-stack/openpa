@@ -66,9 +66,13 @@ pipeline {
                     steps {
                         sh '''rm -rf artifacts/sles12.3/
                               mkdir -p artifacts/sles12.3/
-                              if make rpms; then
-                                  cp -af _topdir/{S,}RPMS artifacts/sles12.3/
-                                  createrepo artifacts/sles12.3/
+                              if make srpm; then
+                                  if make rpms; then
+                                      cp -af _topdir/{S,}RPMS artifacts/sles12.3/
+                                      createrepo artifacts/sles12.3/
+                                  else
+                                      exit \${PIPESTATUS[0]}
+                                  fi
                               else
                                   exit \${PIPESTATUS[0]}
                               fi'''
