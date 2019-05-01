@@ -1,13 +1,17 @@
 Name:		openpa
 Version:	1.0.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 
 Summary:	OpenPA
 
 Group:		Development/Libraries
 License:	ANL
 URL:		https://github.com/pmodels/openpa
-Source0:	https://github.com/pmodels/openpa/releases/download/v%{version}/openpa-%{version}.tar.gz
+Source0:	https://github.com/pmodels/%{name}/archive/v%{version}.tar.gz
+
+# to be able to generate configure if not present
+BuildRequires: autoconf, automake, libtool
+
 
 %description
 OpenPA
@@ -24,6 +28,9 @@ OpenPA devel
 %setup -q
 
 %build
+if [ ! -f configure ]; then
+    ./autogen.sh
+fi
 %configure --enable-shared
 make %{?_smp_mflags}
 
@@ -43,7 +50,11 @@ find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-%{version}-1.el7.centos.x8
 %{_libdir}/pkgconfig/
 
 %changelog
+* Wed May 01 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-3
+- change source to use the more consistent "archive" URL
+
 * Mon Mar 11 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-2
 - update to reflect move to GitHub
+
 * Mon Aug 13 2018 Brian J. Murrell <brian.murrell@intel> - 1.0.4-1
 - initial package
