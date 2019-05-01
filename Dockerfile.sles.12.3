@@ -17,7 +17,7 @@ ARG UID=1000
 # Install basic tools
 RUN zypper --non-interactive update
 RUN zypper --non-interactive install make rpm-build curl createrepo git \
-                             lsb-release
+                             lsb-release autoconf automake libtool
 
 # Add build user (to keep rpmbuild happy)
 ENV USER build
