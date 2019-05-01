@@ -21,5 +21,6 @@ RUN echo "$USER:$PASSWD" | chpasswd
 # Install basic tools
 RUN zypper --non-interactive update
 # basic building
-RUN zypper --non-interactive install make rpm-build curl createrepo git \
-                                     lsb-release autoconf automake libtool
+RUN zypper --non-interactive install make rpm-build curl createrepo git    \
+                                     lsb-release autoconf automake libtool \
+                                     ca-certificates-mozilla
