@@ -22,4 +22,4 @@ RUN echo "$USER:$PASSWD" | chpasswd
 RUN zypper --non-interactive update
 # basic building
 RUN zypper --non-interactive install make rpm-build curl createrepo git \
-                             lsb-release autoconf automake libtool
+                                     lsb-release autoconf automake libtool
