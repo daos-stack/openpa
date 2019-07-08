@@ -1,0 +1,7 @@
+openpa (1.0.4-1) unstable; urgency=medium
+
+  [ John Malmberg ]
+  * Upstream release
+  * Experimental build for daos-stack project
+
+ -- daos-stack <daos@daos.groups.io>  Fri, 14 Jun 2019 17:10:37 +0000
