@@ -20,8 +20,8 @@ RUN echo "$USER:$PASSWD" | chpasswd
 
 # Install basic tools
 RUN zypper --non-interactive update
-RUN zypper --non-interactive install build
-
-# install dependencies (these are broken/lacking Requires: in some RPMs)
-# we should not have to install these; this is a packaging bug
-RUN zypper --non-interactive install perl-XML-Parser perl-libwww-perl
+# basic building
+RUN zypper --non-interactive install make rpm-build curl createrepo git    \
+                                     lsb-release autoconf automake libtool \
+                                     ca-certificates-mozilla build         \
+                                     perl-XML-Parser perl-libwww-perl
