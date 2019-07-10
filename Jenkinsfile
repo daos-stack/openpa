@@ -82,25 +82,74 @@ pipeline {
                     steps {
                         sh '''rm -rf artifacts/centos7/
                               mkdir -p artifacts/centos7/
-                              if make srpm; then
-                                  if make mockbuild; then
-                                      (cd /var/lib/mock/epel-7-x86_64/result/ &&
-                                       cp -r . $OLDPWD/artifacts/centos7/)
-                                      createrepo artifacts/centos7/
-                                  else
-                                      rc=\${PIPESTATUS[0]}
-                                      (cd /var/lib/mock/epel-7-x86_64/result/ &&
-                                       cp -r . $OLDPWD/artifacts/centos7/)
-                                      cp -af _topdir/SRPMS artifacts/centos7/
-                                      exit \$rc
-                                  fi
-                              else
-                                  exit \${PIPESTATUS[0]}
-                              fi'''
+                              make srpm
+                              make mockbuild'''
+                    }
+                    post {
+                        success {
+                             sh '''(cd /var/lib/mock/epel-7-x86_64/result/ &&
+                                    cp -r . $OLDPWD/artifacts/centos7/)
+                                   createrepo artifacts/centos7/'''
+                            archiveArtifacts artifacts: 'artifacts/centos7/**'
+                        }
+                        failure {
+                            sh '''cp -af _topdir/SRPMS artifacts/centos7/
+                                  (cd /var/lib/mock/epel-7-x86_64/result/ &&
+                                   cp -r . $OLDPWD/artifacts/centos7/)
+                                  (cd /var/lib/mock/epel-7-x86_64/root/builddir/build/BUILD/*/
+                                   find . -name configure -printf %h\\\\n | \
+                                   while read dir; do
+                                       if [ ! -f $dir/config.log ]; then
+                                           continue
+                                       fi
+                                       tdir="$OLDPWD/artifacts/centos7/autoconf-logs/$dir"
+                                       mkdir -p $tdir
+                                       cp -a $dir/config.log $tdir/
+                                   done)'''
+                            archiveArtifacts artifacts: 'artifacts/centos7/**'
+                        }
+                    }
+                }
+                stage('Build on Leap 15') {
+                    agent {
+                        dockerfile {
+                            filename 'Dockerfile.leap.15'
+                            label 'docker_runner'
+                            additionalBuildArgs '--build-arg UID=$(id -u) --build-arg JENKINS_URL=' +
+                                                env.JENKINS_URL
+                            args  '--privileged=true'
+                        }
+                    }
+                    steps {
+                        sh '''rm -rf artifacts/leap15.1/
+                              mkdir -p artifacts/leap15.1/
+                              make srpm; then
+                              build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ --dist sl15.1 openpa.spec'''
+                    }
+                    post {
+                        success {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/ &&
+                                   cp {RPMS/*,SRPMS}/* $OLDPWD/artifacts/leap15.1/)
+                                  createrepo artifacts/leap15.1/'''
+                            archiveArtifacts artifacts: 'artifacts/leap15.1/**'
+                        }
+                        failure {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/BUILD &&
+                                   find . -name configure -printf %h\\\\n | \
+                                   while read dir; do
+                                       if [ ! -f $dir/config.log ]; then
+                                           continue
+                                       fi
+                                       tdir="$OLDPWD/artifacts/leap15.1/autoconf-logs/$dir"
+                                       mkdir -p $tdir
+                                       cp -a $dir/config.log $tdir/
+                                   done)'''
+                            archiveArtifacts artifacts: 'artifacts/leap15.1/**'
+                        }
                     }
                     post {
                         always {
-                            archiveArtifacts artifacts: 'artifacts/centos7/**'
+                            archiveArtifacts artifacts: 'artifacts/leap15.1/**'
                         }
                     }
                 }
