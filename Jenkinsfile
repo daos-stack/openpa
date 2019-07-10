@@ -147,11 +147,6 @@ pipeline {
                             archiveArtifacts artifacts: 'artifacts/leap15.1/**'
                         }
                     }
-                    post {
-                        always {
-                            archiveArtifacts artifacts: 'artifacts/leap15.1/**'
-                        }
-                    }
                 }
                 stage('Build on SLES 12.3') {
                     when { beforeAgent true
