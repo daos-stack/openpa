@@ -123,7 +123,7 @@ pipeline {
                     steps {
                         sh '''rm -rf artifacts/leap15.1/
                               mkdir -p artifacts/leap15.1/
-                              make srpm; then
+                              make srpm
                               build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ --dist sl15.1 openpa.spec'''
                     }
                     post {
