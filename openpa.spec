@@ -32,6 +32,10 @@ Requires: %{libname} = %{version}
 OpenPA devel
 
 %prep 
+ls -l /dev/ || true
+ls -l /dev/fd || true
+ls -l /proc || true
+ls -l /proc/self/fd || true
 %setup -q
 
 %build
