@@ -125,7 +125,8 @@ pipeline {
                               mkdir -p artifacts/leap15.1/
                               make srpm
                               id
-                              build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ --dist sl15.1 openpa.spec'''
+                              sudo id
+                              sudo build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ --dist sl15.1 openpa.spec'''
                     }
                     post {
                         success {
