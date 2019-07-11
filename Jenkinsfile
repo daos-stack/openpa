@@ -124,6 +124,8 @@ pipeline {
                         sh '''rm -rf artifacts/leap15.1/
                               mkdir -p artifacts/leap15.1/
                               make srpm
+                              ls -l /dev/fd || true
+                              ls -l /proc/self/fd || true
                               sudo build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ \
                                          --dist sl15.1 openpa.spec'''
                     }
@@ -205,6 +207,8 @@ pipeline {
                               make srpm
                               id
                               sudo id
+                              ls -l /dev/fd || true
+                              ls -l /proc/self/fd || true
                               sudo build --repo http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse \
                                          --dist sl42.3 openpa.spec'''
                     }
