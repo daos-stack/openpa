@@ -157,28 +157,35 @@ pipeline {
                         dockerfile {
                             filename 'Dockerfile.sles.12.3'
                             label 'docker_runner'
-                            additionalBuildArgs  '--build-arg UID=$(id -u) ' +
-                                                 "--build-arg CACHEBUST=${currentBuild.startTimeInMillis}"
+                            additionalBuildArgs '--build-arg UID=$(id -u) --build-arg JENKINS_URL=' +
+                                                env.JENKINS_URL
+                            args  '--privileged=true'
                         }
                     }
                     steps {
                         sh '''rm -rf artifacts/sles12.3/
                               mkdir -p artifacts/sles12.3/
-                              rm -rf _topdir/SRPMS
-                              if make srpm; then
-                                  rm -rf _topdir/RPMS
-                                  if make rpms; then
-                                      ln _topdir/{RPMS/*,SRPMS}/*  artifacts/sles12.3/
-                                      createrepo artifacts/sles12.3/
-                                  else
-                                      exit \${PIPESTATUS[0]}
-                                  fi
-                              else
-                                  exit \${PIPESTATUS[0]}
-                              fi'''
+                              make srpm
+                              sudo build --repo http://cobbler.wolf.hpdd.intel.com/cobbler/ks_mirror/SLES-12.3-x86_64/ --dist sles12.3 openpa.spec'''
                     }
                     post {
-                        always {
+                        success {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/ &&
+                                   cp {RPMS/*,SRPMS}/* $OLDPWD/artifacts/sles12.3/)
+                                  createrepo artifacts/sles12.3/'''
+                            archiveArtifacts artifacts: 'artifacts/sles12.3/**'
+                        }
+                        failure {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/BUILD &&
+                                   find . -name configure -printf %h\\\\n | \
+                                   while read dir; do
+                                       if [ ! -f $dir/config.log ]; then
+                                           continue
+                                       fi
+                                       tdir="$OLDPWD/artifacts/sles12.3/autoconf-logs/$dir"
+                                       mkdir -p $tdir
+                                       cp -a $dir/config.log $tdir/
+                                   done)'''
                             archiveArtifacts artifacts: 'artifacts/sles12.3/**'
                         }
                     }
@@ -195,21 +202,27 @@ pipeline {
                     steps {
                         sh '''rm -rf artifacts/leap42.3/
                               mkdir -p artifacts/leap42.3/
-                              rm -rf _topdir/SRPMS
-                              if make srpm; then
-                                  rm -rf _topdir/RPMS
-                                  if make rpms; then
-                                      ln _topdir/{RPMS/*,SRPMS}/*  artifacts/leap42.3/
-                                      createrepo artifacts/leap42.3/
-                                  else
-                                      exit \${PIPESTATUS[0]}
-                                  fi
-                              else
-                                  exit \${PIPESTATUS[0]}
-                              fi'''
+                              make srpm
+                              sudo build --repo http://download.opensuse.org/distribution/leap/42.3/repo/oss/ --dist sl15.1 openpa.spec'''
                     }
                     post {
-                        always {
+                        success {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/ &&
+                                   cp {RPMS/*,SRPMS}/* $OLDPWD/artifacts/leap42.3/)
+                                  createrepo artifacts/leap42.3/'''
+                            archiveArtifacts artifacts: 'artifacts/leap42.3/**'
+                        }
+                        failure {
+                            sh '''(cd /var/tmp/build-root/home/abuild/rpmbuild/BUILD &&
+                                   find . -name configure -printf %h\\\\n | \
+                                   while read dir; do
+                                       if [ ! -f $dir/config.log ]; then
+                                           continue
+                                       fi
+                                       tdir="$OLDPWD/artifacts/leap42.3/autoconf-logs/$dir"
+                                       mkdir -p $tdir
+                                       cp -a $dir/config.log $tdir/
+                                   done)'''
                             archiveArtifacts artifacts: 'artifacts/leap42.3/**'
                         }
                     }
