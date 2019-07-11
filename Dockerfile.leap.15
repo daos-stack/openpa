@@ -26,5 +26,5 @@ RUN zypper --non-interactive update
 # basic building
 RUN zypper --non-interactive install make rpm-build curl createrepo git    \
                                      lsb-release autoconf automake libtool \
-                                     ca-certificates-mozilla build         \
+                                     ca-certificates-mozilla build sudo    \
                                      perl-XML-Parser perl-libwww-perl
