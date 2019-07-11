@@ -126,7 +126,8 @@ pipeline {
                               make srpm
                               id
                               sudo id
-                              sudo build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ --dist sl15.1 openpa.spec'''
+                              sudo build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ \
+                                         --dist sl15.1 openpa.spec'''
                     }
                     post {
                         success {
@@ -166,7 +167,8 @@ pipeline {
                         sh '''rm -rf artifacts/sles12.3/
                               mkdir -p artifacts/sles12.3/
                               make srpm
-                              sudo build --repo http://cobbler.wolf.hpdd.intel.com/cobbler/ks_mirror/SLES-12.3-x86_64/ --dist sles12.3 openpa.spec'''
+                              sudo build --repo http://cobbler.wolf.hpdd.intel.com/cobbler/ks_mirror/SLES-12.3-x86_64/ \
+                                         --dist sle12.3 openpa.spec'''
                     }
                     post {
                         success {
