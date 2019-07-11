@@ -18,9 +18,6 @@ RUN useradd -u $UID -ms /bin/bash $USER
 RUN groupadd -g $UID $USER
 RUN echo "$USER:$PASSWD" | chpasswd
 
-# need to run the build command as root, as it needs to chroot
-RUN echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/build
-
 # Install basic tools
 RUN zypper --non-interactive update
 # basic building
@@ -28,3 +25,6 @@ RUN zypper --non-interactive install make rpm-build curl createrepo git    \
                                      lsb-release autoconf automake libtool \
                                      ca-certificates-mozilla build sudo    \
                                      perl-XML-Parser perl-libwww-perl
+
+# need to run the build command as root, as it needs to chroot
+RUN echo "build ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/build
