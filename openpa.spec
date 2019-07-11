@@ -43,7 +43,6 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-%{version}-1.el7.centos.x86_64 | xargs ls -ld
 
 %files -n %{libname}
 %{_libdir}/*.so.*
