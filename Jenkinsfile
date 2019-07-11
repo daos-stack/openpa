@@ -204,8 +204,8 @@ pipeline {
                               mkdir -p artifacts/leap42.3/
                               make srpm
                               sudo build --repo http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse \
-                                         --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ \
-                                         --dist sl15.1 openpa.spec'''
+                                         --clean --norootforbuild \
+                                         --dist sl42.3 openpa.spec'''
                     }
                     post {
                         success {
