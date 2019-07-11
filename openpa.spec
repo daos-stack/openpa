@@ -1,6 +1,6 @@
 Name:		openpa
 Version:	1.0.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 
 Summary:	OpenPA
 
@@ -16,10 +16,17 @@ BuildRequires: autoconf, automake, libtool
 %description
 OpenPA
 
+%define libname libopa1
+%package -n %{libname}
+Summary:	OpenPA library
+
+%description -n %{libname}
+OpenPA library.
+
 %package devel
 Summary:	OpenPA devel
-
 Group:		Development/Libraries
+Requires: %{libname} = %{version}
 
 %description devel
 OpenPA devel
@@ -38,7 +45,7 @@ make %{?_smp_mflags}
 %make_install
 find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-%{version}-1.el7.centos.x86_64 | xargs ls -ld
 
-%files
+%files -n %{libname}
 %{_libdir}/*.so.*
 
 %files devel
@@ -50,6 +57,9 @@ find /home/brian/daos/openpa/_topdir/BUILDROOT/openpa-%{version}-1.el7.centos.x8
 %{_libdir}/pkgconfig/
 
 %changelog
+* Wed Jul 10 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-4
+- split out versioned library into a subpackage
+
 * Wed May 01 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-3
 - change source to use the more consistent "archive" URL
 
