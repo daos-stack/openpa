@@ -199,6 +199,7 @@ pipeline {
                             label 'docker_runner'
                             additionalBuildArgs  '--build-arg UID=$(id -u) ' +
                                                  "--build-arg CACHEBUST=${currentBuild.startTimeInMillis}"
+                            args  '--privileged=true'
                         }
                     }
                     steps {

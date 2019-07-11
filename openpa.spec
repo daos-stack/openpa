@@ -19,6 +19,7 @@ OpenPA
 %define libname libopa1
 %package -n %{libname}
 Summary:	OpenPA library
+Obsoletes:	%{name} < 1.0.4-4
 
 %description -n %{libname}
 OpenPA library.
@@ -62,6 +63,8 @@ make %{?_smp_mflags}
 %changelog
 * Wed Jul 10 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-4
 - split out versioned library into a subpackage
+- Obsoletes: previous openpa packages since it contained the
+  library
 
 * Wed May 01 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-3
 - change source to use the more consistent "archive" URL
