@@ -21,8 +21,8 @@ RUN echo "$USER:$PASSWD" | chpasswd
 # Install basic tools
 RUN zypper --non-interactive update
 # basic building
-RUN zypper addrepo https://download.opensuse.org/repositories/openSUSE:Tools/SLE_12_SP3/openSUSE:Tools.repo; \
-    zypper refresh
+RUN zypper --non-interactive ar https://download.opensuse.org/repositories/openSUSE:Tools/SLE_12_SP3/openSUSE:Tools.repo; \
+    zypper --non-interactive --gpg-auto-import-keys ref
 RUN zypper --non-interactive install make rpm-build curl createrepo git    \
                                      lsb-release autoconf automake libtool \
                                      ca-certificates-mozilla build sudo    \
