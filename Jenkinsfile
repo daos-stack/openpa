@@ -124,9 +124,8 @@ pipeline {
                         sh '''rm -rf artifacts/leap15.1/
                               mkdir -p artifacts/leap15.1/
                               make srpm
-                              ls -l /dev/fd || true
-                              ls -l /proc/self/fd || true
-                              sudo build --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ \
+                              sudo build --repo http://download.opensuse.org/update/leap/15.1/oss/ \
+                                         --repo http://download.opensuse.org/distribution/leap/15.1/repo/oss/ \
                                          --dist sl15.1 openpa.spec'''
                     }
                     post {
@@ -167,7 +166,9 @@ pipeline {
                         sh '''rm -rf artifacts/sles12.3/
                               mkdir -p artifacts/sles12.3/
                               make srpm
-                              sudo build --repo http://cobbler.wolf.hpdd.intel.com/cobbler/ks_mirror/SLES-12.3-x86_64/suse/ \
+                              sudo build --repo http://10.8.0.10/cobbler/repo_mirror/sdk-sles12.3-x86_64 \
+                                         --repo http://10.8.0.10/cobbler/repo_mirror/updates-sles12.3-x86_64 \
+                                         --repo http://cobbler.wolf.hpdd.intel.com/cobbler/ks_mirror/SLES-12.3-x86_64/suse/ \
                                          --dist sle12.3 openpa.spec'''
                     }
                     post {
@@ -210,7 +211,8 @@ pipeline {
                               sudo id
                               ls -l /dev/fd || true
                               ls -l /proc/self/fd || true
-                              sudo build --repo http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse/ \
+                              sudo build --repo http://download.opensuse.org/update/leap/42.3/oss/ \
+                                         --repo http://download.opensuse.org/distribution/leap/42.3/repo/oss/suse/ \
                                          --dist sl42.3 openpa.spec'''
                     }
                     post {
