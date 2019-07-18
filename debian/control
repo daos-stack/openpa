@@ -1,0 +1,44 @@
+Source: openpa
+Priority: optional
+Maintainer: daos-stack <daos@daos.groups.io>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.1.2
+Section: libs
+Homepage: https://trac.mpich.org/projects/openpa/
+Vcs-Git: https://github.com/pmodels/openpa.git
+Vcs-Browser: https://github.com/pmodels/openpa.git
+
+Package: libopa-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libopa1 (= ${binary:Version}), ${misc:Depends}
+Description: atomic primatives for high performance, concurrent software
+ The goal of this project is to provide an open source, highly-portable
+ library that provides atomic primitives (and related constructs) for
+ high performance, concurrent software. This project is a collaboration
+ between the Mathematics and Computer Science (MCS) division at Argonne
+ National Laboratory (ANL) and the HDF Group. The code was originally
+ derived from work on the MPICH2 project.
+ .
+ This package is needed to compile programs against openpa.
+ It contains the header files and links needed for compiling.
+
+
+Package: libopa1
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: atomic primatives for high performance, concurrent software
+ The goal of this project is to provide an open source, highly-portable
+ library that provides atomic primitives (and related constructs) for
+ high performance, concurrent software. This project is a collaboration
+ between the Mathematics and Computer Science (MCS) division at Argonne
+ National Laboratory (ANL) and the HDF Group. The code was originally
+ derived from work on the MPICH2 project.
+ .
+ This package is needed to compile programs against openpa.
+ It contains the header files and links needed for compiling.
+ .
+ This package contains the shared libraries.
+
