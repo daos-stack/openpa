@@ -6,14 +6,14 @@ Release:	4%{?dist}
 
 Summary:	OpenPA
 
-Group:		Development/Libraries
+Group:		Development/Libraries/C and C++
 License:	ANL
 URL:		https://github.com/pmodels/openpa
 Source0:	https://github.com/pmodels/%{name}/archive/v%{version}.tar.gz
 
 # to be able to generate configure if not present
 BuildRequires: autoconf, automake, libtool
-BuildRequires: pkg-config
+BuildRequires: pkgconfig
 
 
 %description
