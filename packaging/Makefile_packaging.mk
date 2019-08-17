@@ -23,6 +23,7 @@ ID_LIKE := suse
 DISTRO_ID := sle$(VERSION_ID)
 endif
 
+BUILD_OS ?= leap.42.3
 COMMON_RPM_ARGS := --define "%_topdir $$PWD/_topdir"
 DIST    := $(shell rpm $(COMMON_RPM_ARGS) --eval %{?dist})
 ifeq ($(DIST),)
@@ -268,6 +269,13 @@ chrootbuild: $(SRPM) Makefile
 	     $($(basename $(DISTRO_ID))_REPOS) --dist $(DISTRO_ID) $(RPM_BUILD_OPTIONS) \
 	     $(SRPM)
 endif
+
+docker_chrootbuild:
+	docker build --build-arg UID=$$(id -u) -t $(BUILD_OS)-chrootbuild \
+	             -f packaging/Dockerfile.$(BUILD_OS) .
+	docker run --privileged=true -w /home/brian/daos/rpm/openpa           \
+	           -v=/home/brian/daos/rpm/openpa:/home/brian/daos/rpm/openpa \
+	           -it $(BUILD_OS)-chrootbuild bash -c "make chrootbuild"
 
 rpmlint: $(SPEC)
 	rpmlint $<
