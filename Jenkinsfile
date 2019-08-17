@@ -73,7 +73,7 @@ pipeline {
                         checkoutScm url: 'https://github.com/daos-stack/packaging.git',
                                     checkoutDir: 'packaging-module',
                                     branch: "corci-725-enhancements"
-                                    #branch: "master"
+                                    //branch: "master"
                         sh 'make PACKAGING_CHECK_DIR=packaging-module packaging_check'
                     }
                 } //stage('Check Packaging')
