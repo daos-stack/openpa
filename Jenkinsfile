@@ -74,9 +74,9 @@ pipeline {
                                     checkoutDir: 'packaging-module',
                                     branch: "corci-725-enhancements"
                                     //branch: "master"
-                        catchError(stageResult: 'UNSTABLE', buildResult: 'SUCCESS') {
+                        //catchError(stageResult: 'UNSTABLE', buildResult: 'SUCCESS') {
                             sh 'make PACKAGING_CHECK_DIR=packaging-module packaging_check'
-                        }
+                        //}
                     }
                     post {
                         unsuccessful {
