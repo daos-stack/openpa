@@ -78,6 +78,16 @@ pipeline {
                             sh 'make PACKAGING_CHECK_DIR=packaging-module packaging_check'
                         }
                     }
+                    post {
+                        unsuccessful {
+                            emailext body: 'Packaging out of date for openpa',
+                                     recipientProviders: [
+                                          [$class: 'DevelopersRecipientProvider'],
+                                          [$class: 'RequesterRecipientProvider']
+                                     ],
+                                     subject: 'Packaging is out of date for openpa'
+                        }
+                    }
                 } //stage('Check Packaging')
             } // parallel
         } //stage('Lint')
