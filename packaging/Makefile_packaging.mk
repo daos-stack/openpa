@@ -24,6 +24,7 @@ DISTRO_ID := sle$(VERSION_ID)
 endif
 
 BUILD_OS ?= leap.42.3
+PACKAGING_CHECK_DIR ?= ../packaging
 COMMON_RPM_ARGS := --define "%_topdir $$PWD/_topdir"
 DIST    := $(shell rpm $(COMMON_RPM_ARGS) --eval %{?dist})
 ifeq ($(DIST),)
@@ -281,16 +282,16 @@ rpmlint: $(SPEC)
 	rpmlint $<
 
 packaging_check:
-	diff --exclude \*.sw?              \
-	     --exclude debian              \
-	     --exclude .git                \
-	     --exclude Jenkinsfile         \
-	     --exclude libfabric.spec      \
-	     --exclude Makefile            \
-	     --exclude README.md           \
-	     --exclude _topdir             \
-	     --exclude \*.tar.\*           \
-	     -ur ../packaging/ packaging/
+	diff --exclude \*.sw?                       \
+	     --exclude debian                       \
+	     --exclude .git                         \
+	     --exclude Jenkinsfile                  \
+	     --exclude libfabric.spec               \
+	     --exclude Makefile                     \
+	     --exclude README.md                    \
+	     --exclude _topdir                      \
+	     --exclude \*.tar.\*                    \
+	     -ur $(PACKAGING_CHECK_DIR)/ packaging/
 
 check-env:
 ifndef DEBEMAIL

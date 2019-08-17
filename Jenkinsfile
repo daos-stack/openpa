@@ -51,7 +51,7 @@ pipeline {
             }
         }
         stage('Lint') {
-            stages {
+            parallel {
                 stage('RPM Lint') {
                     agent {
                         dockerfile {
@@ -67,7 +67,15 @@ pipeline {
                         sh 'make rpmlint'
                     }
                 }
-            }
+                stage('Check Packaging') {
+                    steps {
+                        checkoutScm url: 'https://github.com/daos-stack/packaging.git',
+                                    checkoutDir: 'packaging-module',
+                                    branch: "master"
+                        sh 'make PACKAGING_CHECK_DIR=packaging-module packaging_check'
+                    }
+                } //stage('Check Packaging')
+            } // parallel
         } //stage('Lint')
         stage('Build') {
             parallel {
