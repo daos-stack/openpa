@@ -68,6 +68,7 @@ pipeline {
                     }
                 }
                 stage('Check Packaging') {
+                    agent { label 'lightweight' }
                     steps {
                         checkoutScm url: 'https://github.com/daos-stack/packaging.git',
                                     checkoutDir: 'packaging-module',
