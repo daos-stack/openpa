@@ -29,7 +29,7 @@ OpenPA library.
 %package devel
 Summary:	OpenPA devel
 Group:		Development/Libraries/C and C++
-Requires: %{libname}}%{?_isa} = %{version}-%{release}
+Requires: %{libname}%{?_isa} = %{version}-%{release}
 
 %description devel
 OpenPA devel
@@ -51,6 +51,7 @@ make %{?_smp_mflags}
 %postun -n %{libname} -p /sbin/ldconfig
 
 %files -n %{libname}
+%defattr(-,root,root,-)
 %{_libdir}/*.so.*
 
 %files devel
