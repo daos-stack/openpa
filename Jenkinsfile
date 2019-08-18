@@ -74,11 +74,19 @@ pipeline {
                                     checkoutDir: 'packaging-module',
                                     branch: "corci-725-enhancements"
                                     //branch: "master"
-                        //catchError(stageResult: 'UNSTABLE', buildResult: 'SUCCESS') {
+                        catchError(stageResult: 'UNSTABLE', buildResult: 'SUCCESS') {
                             sh 'make PACKAGING_CHECK_DIR=packaging-module packaging_check'
-                        //}
+                        }
                     }
                     post {
+                        success {
+                            emailext body: 'Successful build',
+                                     recipientProviders: [
+                                          [$class: 'DevelopersRecipientProvider'],
+                                          [$class: 'RequesterRecipientProvider']
+                                     ],
+                                     subject: 'Successful build of openpa'
+                        }
                         unsuccessful {
                             emailext body: 'Packaging out of date for openpa',
                                      recipientProviders: [
