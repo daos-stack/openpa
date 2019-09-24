@@ -2,7 +2,7 @@
 
 Name:		openpa
 Version:	1.0.4
-Release:	4%{?dist}
+Release:	5%{?dist}
 
 Summary:	OpenPA
 
@@ -64,17 +64,17 @@ make %{?_smp_mflags}
 %{_libdir}/pkgconfig/
 
 %changelog
-* Sat Aug 17 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-4
-- split out versioned library into a subpackage
+* Sat Aug 17 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-5
+- Split out versioned library into a subpackage
   - add a Provides: to the new libopa1 package
 - Obsoletes: previous openpa packages since it contained the
   library
 
 * Wed May 01 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-3
-- change source to use the more consistent "archive" URL
+- Change source to use the more consistent "archive" URL
 
 * Mon Mar 11 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-2
-- update to reflect move to GitHub
+- Update to reflect move to GitHub
 
 * Mon Aug 13 2018 Brian J. Murrell <brian.murrell@intel> - 1.0.4-1
-- initial package
+- Initial package
