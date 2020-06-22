@@ -2,12 +2,12 @@
 
 Name:		openpa
 Version:	1.0.4
-Release:	5%{?dist}
+Release:	6%{?dist}
 
 Summary:	OpenPA
 
 Group:		Development/Libraries/C and C++
-License:	ANL
+License:	UChicago Argonne -- OpenPA License
 URL:		https://github.com/pmodels/openpa
 Source0:	https://github.com/pmodels/%{name}/archive/v%{version}.tar.gz
 
@@ -18,7 +18,6 @@ BuildRequires: pkgconfig
 
 %description
 OpenPA
-
 %package -n %{libname}
 Summary:	OpenPA library
 Obsoletes:	%{name} < 1.0.4-4
@@ -53,6 +52,7 @@ make %{?_smp_mflags}
 
 %files -n %{libname}
 %defattr(-,root,root,-)
+%license COPYRIGHT
 %{_libdir}/*.so.*
 
 %files devel
@@ -64,6 +64,10 @@ make %{?_smp_mflags}
 %{_libdir}/pkgconfig/
 
 %changelog
+* Mon Jun 22 2020 Brian J. Murrell <brian.murrell@intel> - 1.0.4-6
+- Fix License:
+- Add %license
+
 * Sat Aug 17 2019 Brian J. Murrell <brian.murrell@intel> - 1.0.4-5
 - Split out versioned library into a subpackage
   - add a Provides: to the new libopa1 package
